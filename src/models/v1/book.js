@@ -20,6 +20,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     trailer: {
         url: {
             type: String,
@@ -36,7 +40,7 @@ const bookSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['action', 'adventure', 'classic', 'comic', 'fantasy', 'horror', 'romance', 'sci-fi', 'thrillers', 'crime', 'drama', 'fairytale'],
+        enum: ['action', 'adventure', 'classic', 'comic', 'fantasy', 'horror', 'romance', 'sci-fi', 'thrillers', 'crime', 'drama', 'fairytale', 'other'],
         required: true
     },
     description: {type: String, required: true},

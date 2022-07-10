@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    phone: {
+    phoneNumber: {
         type: String,
         required: true,
         unique: true,
@@ -52,10 +52,6 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password must include a lowercase, uppercase, digit, symbol and must be at least 8 characters long.')
             }
         }
-    },
-    pin: {
-        type: String,
-        required: true,
     },
     authInfo: {
         otp: {type: String},

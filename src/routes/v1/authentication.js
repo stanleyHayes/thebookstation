@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
     register, login, updateProfile, deleteProfile, deactivateProfile, reactivateProfile, changePassword,
-    resetPassword, changePin, resetPin, verifyProfile, logout, logoutAll, resendOTP, verifyLoginOTP, getProfile
+    resetPassword, verifyProfile, logout, logoutAll, resendOTP, verifyLoginOTP, getProfile
 } = require("../../controllers/v1/authentication");
 const {authenticate} = require("../../middleware/v1/authenticate");
 

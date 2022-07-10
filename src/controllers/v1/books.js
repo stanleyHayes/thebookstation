@@ -1,13 +1,13 @@
 const Book = require("./../../models/v1/book");
 const Comment = require("./../../models/v1/comment");
-const Like = require("./../../models/v1/comment");
+const Like = require("./../../models/v1/like");
 const Review = require("./../../models/v1/review");
 
 const {uploadFile, removeFile} = require("../../utils/upload");
 
 exports.createBook = async (req, res) => {
     try {
-        const {link, category, image, caption, trailer} = req.body;
+        const {link, category, image, caption, trailer, description, name} = req.body;
         const trailerLink = await uploadFile(trailer, {resource_type: 'video'});
         const imageLink = await uploadFile(image, {resource_type: 'image'});
         const book = await Book.create({
@@ -16,7 +16,9 @@ exports.createBook = async (req, res) => {
             link,
             category,
             caption,
-            user: req.user._id
+            user: req.user._id,
+            description,
+            name
         });
         await book.populate({path: 'user'});
         await book.populate({path: 'comments'});
@@ -25,6 +27,7 @@ exports.createBook = async (req, res) => {
 
         res.status(201).json({message: 'Book created successfully', data: book});
     } catch (e) {
+        console.log(e.message);
         res.status(500).json({message: e.message});
     }
 }

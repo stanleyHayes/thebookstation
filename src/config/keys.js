@@ -8,5 +8,6 @@ module.exports = {
     jwtSecret: process.env.JWT_SECRET,
     cloudinary: process.env.CLOUDINARY_URL,
     sendGridAPIKey: process.env.SENDGRID_API_KEY,
-    sendGridFromEmail: process.env.SENGRID_FROM_EMAIL
+    sendGridFromEmail: process.env.SENGRID_FROM_EMAIL,
+    otpLength: process.env.OTP_LENGTH
 }

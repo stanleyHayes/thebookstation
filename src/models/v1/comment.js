@@ -22,6 +22,6 @@ const commentSchema = new mongoose.Schema({
     toObject: {virtuals: true}
 });
 
-const Book = mongoose.model('Book', commentSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
-module.exports = Book;
+module.exports = Comment;

@@ -11,7 +11,6 @@ const {sendEmail} = require("../../utils/emails");
 
 exports.register = async (req, res) => {
     try {
-        // add recommendation logic
         const {username, password, phoneNumber, firstName, lastName,  email, role} = req.body;
         if (!username || !password || !phoneNumber || !firstName || !lastName || !email)
             return res.status(400).json({message: 'Missing required fields'});
@@ -27,7 +26,7 @@ exports.register = async (req, res) => {
                 specialChars: false
             });
 
-        const link = `https://ruderalis.vercel.app/auth/verify/${token}`;
+        const link = `https://thebookstore.vercel.app/auth/verify/${token}`;
         const message = `Access this link ${link} in the browser and enter the OTP code. \nYour OTP is ${otp}.OTP expires after 48 hours`;
         // await sendSMS(phoneNumber, message);
         const subject = `Verify Account`;
@@ -40,7 +39,6 @@ exports.register = async (req, res) => {
             email,
             role,
             password: await bcrypt.hash(password, 10),
-            pin: await bcrypt.hash(pin, 10),
             fullName: `${firstName} ${lastName}`,
             authInfo: {
                 otp,

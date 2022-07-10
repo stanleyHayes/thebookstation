@@ -24,10 +24,10 @@ mongoose.connect(keys.mongoDBURI).then(data => {
 
 const app = express();
 
-app.use(expressUserAgent.express());
-app.use(express.json({limit: '10MB'}));
-app.use(cors());
 app.use(helmet());
+app.use(cors());
+app.use(expressUserAgent.express());
+app.use(express.json({limit: '20MB'}));
 app.use(morgan('dev'));
 
 app.use('/api/v1/user/auth', userAuthV1Routes);
