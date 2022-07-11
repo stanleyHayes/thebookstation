@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
                 token
             }
         });
-        res.status(201).json({message: 'Account created successfully. Check your messages to verify your account.'});
+        res.status(201).json({message: 'Account created successfully. Check your messages to verify your account.', token});
     } catch (e) {
         res.status(500).json({message: e.message});
     }
@@ -355,6 +355,7 @@ exports.verifyProfile = async (req, res) => {
         if (!otp)
             return res.status(400).json({message: 'Missing required field otp'});
 
+        console.log(token)
         const user = await User.findOne(
             {$and: [{"authInfo.token": token}, {"authInfo.otp": otp}]}
         );

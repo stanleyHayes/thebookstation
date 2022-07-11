@@ -44,50 +44,6 @@ const bookSchema = new mongoose.Schema({
         required: true
     },
     description: {type: String, required: true},
-    rating: {
-        count: {
-            type: Number,
-            min: 0,
-            default: 0
-        },
-        total: {
-            type: Number,
-            min: 0,
-            default: 0
-        },
-        average: {
-            type: Number,
-            min: 0,
-            default: 0
-        },
-        details: {
-            five: {
-                type: Number,
-                min: 0,
-                default: 0
-            },
-            four: {
-                type: Number,
-                min: 0,
-                default: 0
-            },
-            three: {
-                type: Number,
-                min: 0,
-                default: 0
-            },
-            two: {
-                type: Number,
-                min: 0,
-                default: 0
-            },
-            one: {
-                type: Number,
-                min: 0,
-                default: 0
-            },
-        }
-    }
 }, {
     timestamps: {createdAt: true, updatedAt: true},
     toJSON: {virtuals: true},

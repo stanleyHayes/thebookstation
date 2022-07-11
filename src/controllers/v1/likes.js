@@ -2,9 +2,11 @@ const Like = require("./../../models/v1/like");
 
 exports.toggleLike = async (req, res) => {
     try {
-        let like = await Like.findOne({user: req.user._id, book: req.params.book});
+        const {book} = req.body;
+        console.log(book)
+        let like = await Like.findOne({user: req.user._id, book});
         if (!like) {
-            like = await Like.create({user: req.user._id, book: req.params.book});
+            like = await Like.create({user: req.user._id, book});
         } else {
             await like.remove();
         }
@@ -30,7 +32,7 @@ exports.getLike = async (req, res) => {
 
 exports.getLikes = async (req, res) => {
     try {
-        const likes = await Like.find({book: req.params.book})
+        const likes = await Like.find()
             .populate({path: 'user'}).populate({path: 'book'});
         res.status(200).json({message: 'Likes retrieved successfully', data: likes});
     } catch (e) {

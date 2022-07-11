@@ -20,8 +20,8 @@ exports.createBook = async (req, res) => {
             description,
             name
         });
-        await book.populate({path: 'user'});
-        await book.populate({path: 'comments'});
+        await book.populate({path: 'user', select: 'firstName lastName fullName username'});
+        await book.populate({path: 'comments', populate: {path: 'user', select: 'firstName lastName fullName username'}});
         await book.populate({path: 'likes'});
         await book.populate({path: 'count'});
 
@@ -36,8 +36,8 @@ exports.createBook = async (req, res) => {
 exports.getBook = async (req, res) => {
     try {
         const book = await Book.findById(req.params.id)
-            .populate({path: 'user'})
-            .populate({path: 'comments'})
+            .populate({path: 'user', select: 'firstName lastName fullName username'})
+            .populate({path: 'comments', populate: {path: 'user', select: 'firstName lastName fullName username'}})
             .populate({path: 'likes'})
             .populate({path: 'count'})
             .populate({path: 'reviews'});
@@ -64,8 +64,8 @@ exports.getBooks = async (req, res) => {
 
         const books = await Book
             .find(match)
-            .populate({path: 'user'})
-            .populate({path: 'comments'})
+            .populate({path: 'user', select: 'firstName lastName fullName username'})
+            .populate({path: 'comments', populate: {path: 'user', select: 'firstName lastName fullName username'}})
             .populate({path: 'likes'})
             .populate({path: 'count'})
             .skip(skip)
@@ -83,8 +83,8 @@ exports.getBooks = async (req, res) => {
 exports.updateBook = async (req, res) => {
     try {
         const book = await Book.findOne({user: req.user._id, _id: req.params.id})
-            .populate({path: 'user'})
-            .populate({path: 'comments'})
+            .populate({path: 'user', select: 'firstName lastName fullName username'})
+            .populate({path: 'comments', populate: {path: 'user', select: 'firstName lastName fullName username'}})
             .populate({path: 'likes'})
             .populate({path: 'count'})
             .populate({path: 'reviews'});
@@ -92,17 +92,17 @@ exports.updateBook = async (req, res) => {
         const updates = Object.keys(req.body);
         const allowedUpdates = ['description', 'caption', 'trailer', 'image', 'link', 'category'];
         const isAllowed = updates.every(update => allowedUpdates.includes(update));
-        if(!isAllowed) return res.status(400).json({message: 'Updates not allowed'});
-        for (let key of allowedUpdates){
-            if(key === 'trailer'){
+        if (!isAllowed) return res.status(400).json({message: 'Updates not allowed'});
+        for (let key of allowedUpdates) {
+            if (key === 'trailer') {
                 await removeFile(book.trailer.public_id);
                 const trailer = await uploadFile(req.body[key], {resource_type: 'video'});
-                book.trailer =  {url: trailer.secure_url, public_id: trailer.public_id};
-            }else if(key === 'image'){
+                book.trailer = {url: trailer.secure_url, public_id: trailer.public_id};
+            } else if (key === 'image') {
                 await removeFile(book.image.public_id);
                 const image = await uploadFile(req.body[key], {resource_type: 'image'});
                 book.image = {url: image.secure_url, public_id: image.public_id};
-            }else{
+            } else {
                 book[key] = req.body[key];
             }
         }

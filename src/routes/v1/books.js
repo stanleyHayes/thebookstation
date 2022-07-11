@@ -6,11 +6,9 @@ const router = express.Router({mergeParams: true});
 
 const commentsRouter = require("./comments");
 const likesRouter = require("./likes");
-const reviewsRouter = require("./reviews");
 
 router.get('/:book/comments', commentsRouter);
-router.get('/:book/likes', likesRouter);
-router.get('/:book/reviews', reviewsRouter);
+router.post('/:book/likes', likesRouter);
 
 router.route('/').post(authenticate, createBook).get(getBooks);
 router.route('/:id').get(getBook).put(authenticate, updateBook).delete(authenticate, deleteBook);
