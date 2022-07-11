@@ -82,6 +82,11 @@ const userSchema = new mongoose.Schema({
         enum: ['vendor', 'user'],
         default: 'user'
     },
+    gender: {
+        type: String,
+        enum: ['male', 'female'],
+        default: 'male'
+    },
 }, {
     timestamps: {createdAt: true, updatedAt: true},
     toJSON: {virtuals: true},

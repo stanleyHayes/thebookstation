@@ -11,8 +11,8 @@ const {sendEmail} = require("../../utils/emails");
 
 exports.register = async (req, res) => {
     try {
-        const {username, password, phoneNumber, firstName, lastName,  email, role} = req.body;
-        if (!username || !password || !phoneNumber || !firstName || !lastName || !email)
+        const {username, password, phoneNumber, firstName, lastName,  email, role, gender} = req.body;
+        if (!username || !password || !phoneNumber || !firstName || !lastName || !email || !gender)
             return res.status(400).json({message: 'Missing required fields'});
         const existingUser = await User.findOne({$or: [{username}, {phoneNumber}, {email}]});
         if (existingUser)
@@ -38,6 +38,7 @@ exports.register = async (req, res) => {
             phoneNumber,
             email,
             role,
+            gender,
             password: await bcrypt.hash(password, 10),
             fullName: `${firstName} ${lastName}`,
             authInfo: {
