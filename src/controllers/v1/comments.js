@@ -38,19 +38,15 @@ exports.getComments = async (req, res) => {
         const match = {};
         const sort = {createdAt: -1};
         const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.size) || 30;
+        const limit = parseInt(req.query.size) || 50;
         const skip = (page - 1) * limit;
-
-        if (req.params.book) {
-            match['book'] = req.params.book
+        if (req.query.book) {
+            match['book'] = req.query.book
         }
 
         const comments = await Comment
             .find(match)
-            .populate({path: 'user'})
-            .populate({path: 'comments'})
-            .populate({path: 'likes'})
-            .populate({path: 'count'})
+            .populate({path: 'user', select: 'fullName username'})
             .skip(skip)
             .limit(limit)
             .sort(sort);

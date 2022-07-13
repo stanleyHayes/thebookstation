@@ -27,7 +27,6 @@ exports.createBook = async (req, res) => {
 
         res.status(201).json({message: 'Book created successfully', data: book});
     } catch (e) {
-        console.log(e.message);
         res.status(500).json({message: e.message});
     }
 }
@@ -53,7 +52,9 @@ exports.getBook = async (req, res) => {
 exports.getBooks = async (req, res) => {
     try {
         const match = {};
-        const sort = {};
+        const sort = {
+            createdAt: -1,
+        };
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.size) || 30;
         const skip = (page - 1) * limit;
