@@ -123,6 +123,8 @@ exports.deleteBook = async (req, res) => {
         await Comment.remove({book: book._id});
         await Like.remove({book: book._id});
         await Review.remove({book: book._id});
+        await removeFile(book.trailer._url, {resource_type: 'video'});
+        await removeFile(book.image._url, {resource_type: 'image'});
         res.status(200).json({message: 'Book trailer removed successfully', data: book});
     } catch (e) {
         res.status(500).json({message: e.message});
