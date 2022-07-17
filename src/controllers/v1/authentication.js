@@ -121,7 +121,7 @@ exports.verifyLoginOTP = async (req, res) => {
         const loginOTP = jwt.sign(
             {_id: user._id.toString()},
             keys.jwtSecret,
-            {expiresIn: '24h'},
+            {expiresIn: '356d'},
             null
         );
 
